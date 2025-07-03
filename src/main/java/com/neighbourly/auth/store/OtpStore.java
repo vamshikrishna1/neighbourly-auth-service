@@ -1,17 +1,9 @@
 package com.neighbourly.auth.store;
 
-import org.springframework.stereotype.Component;
 
-@Component
-public class OtpStore {
+public interface OtpStore {
 
-    public void storeOtp(String email, String otp){
+    void storeOtp(String email, String otp);
 
-    }
-
-    public String getOtp(String email){
-        return null;
-    }
-
-
+    String getOtp(String email);
 }

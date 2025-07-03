@@ -1,6 +1,5 @@
 package com.neighbourly.auth.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,11 +13,12 @@ public class EmailService {
     private MailSender mailSender;
 
 
-    public void sendEmail(String toEmail, String text) {
+    public void sendEmail(String toEmail, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
-        message.setText("OTP : " + text);
-        message.setFrom("v4vamshikrishna@gmail.com");
+        message.setText(text);
+        message.setSubject(subject);
+
         mailSender.send(message);
     }
 }

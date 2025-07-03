@@ -1,14 +1,15 @@
 package com.neighbourly.auth.service;
 
+import com.neighbourly.auth.constants.AppConstants;
 import com.neighbourly.auth.model.RegisterRequest;
 import com.neighbourly.auth.store.OtpStore;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.neighbourly.auth.constants.AppConstants.*;
+
 import java.security.SecureRandom;
-import java.util.Random;
+
 
 @Service
 public class AuthService {
@@ -22,16 +23,11 @@ public class AuthService {
     public void sendOtp(RegisterRequest request) {
         String otp = generateOtp();
         otpStore.storeOtp(request.getEmail(), otp);
-        emailService.sendEmail(request.getEmail(),otp);
-
-
-        // TODO: Save OTP (in-memory/Redis)
-        // TODO: Send OTP via SMS/Email (mock for now)
-      //  System.out.println("Generated OTP for " + request.phoneOrEmail() + ": " + otp);
+        emailService.sendEmail(request.getEmail(), OTP_EMAIL_SUBJECT, OTP_EMAIL_TEMPLATE.formatted(request.getFirstName(), otp));
     }
 
     private String generateOtp() {
-        return String.valueOf(new Random().nextInt(899999) + 100000);
+        return String.valueOf(new SecureRandom().nextInt(99999) + 100000);
     }
 
 
