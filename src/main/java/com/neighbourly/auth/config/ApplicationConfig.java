@@ -1,9 +1,13 @@
 package com.neighbourly.auth.config;
 
 
+import com.neighbourly.auth.store.CacheStore;
+import com.neighbourly.auth.store.RedisStore;
+import com.neighbourly.auth.store.SimpleStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
@@ -31,6 +35,21 @@ public class ApplicationConfig {
         props.put("mail.debug", "true");
         return mailSender;
     }
+
+
+    @Bean
+    @Profile("dev")
+    public CacheStore simpleOtpStore(){
+        return new SimpleStore();
+    }
+
+
+    @Bean
+    public CacheStore redisOtpStore(){
+        return new RedisStore();
+    }
+
+
 
 
 

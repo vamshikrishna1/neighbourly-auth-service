@@ -22,5 +22,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException exception){
+        Error error = new Error(exception.getErrorCode(), exception.getErrorDescription());
+        ErrorResponse errorResponse = ErrorResponse.builder().errList(List.of(error)).build();
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
 
 }
