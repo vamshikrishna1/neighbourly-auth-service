@@ -1,11 +1,11 @@
 package com.neighbourly.auth.client;
 
-import org.springframework.cloud.openfeign.FeignClient;
+import com.neighbourly.auth.model.UserDto;
 
 
 public interface UserClient {
 
-public void createUser();
+    UserDto createUser(UserDto userDto);
 
 
 }

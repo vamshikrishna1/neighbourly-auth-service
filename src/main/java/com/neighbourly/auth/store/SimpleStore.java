@@ -9,12 +9,16 @@ public class SimpleStore implements CacheStore {
 
 
     @Override
-    public void store(String email, String otp) {
-        otpMap.put(email, otp);
+    public void store(String key, String value) {
+        otpMap.put(key, value);
     }
 
     @Override
-    public String get(String email) {
-        return otpMap.get(email);
+    public String get(String key) {
+        return otpMap.get(key);
+    }
+
+    public void delete(String key) {
+        otpMap.remove(key);
     }
 }
