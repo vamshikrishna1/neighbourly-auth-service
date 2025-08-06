@@ -22,14 +22,6 @@ public class AppConstants {
 
     public static final String OTP_EMAIL_SUBJECT = "Your OTP for Neighbourly Registration";
 
-    public static enum ROLES {
-        GUEST,
-        VERIFIED_USER,
-        VERIFIED_NEIGHBOUR,
-        AUTHORIZED_SELLER,
-        AUTHORIZED_SERVICE_PROVIDER,
-        COMMUNITY_ADMIN,
-        ADMIN
-    }
+
 
 }

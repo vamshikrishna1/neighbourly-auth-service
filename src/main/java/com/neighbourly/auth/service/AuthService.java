@@ -18,7 +18,8 @@ import java.util.Map;
 
 import static com.neighbourly.auth.constants.AppConstants.OTP_EMAIL_SUBJECT;
 import static com.neighbourly.auth.constants.AppConstants.OTP_EMAIL_TEMPLATE;
-import static com.neighbourly.auth.constants.AppConstants.ROLES.VERIFIED_USER;
+
+import static com.neighbourly.auth.constants.ROLE.VERIFIED_USER;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 
