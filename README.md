@@ -1,7 +1,13 @@
-Neighbourly Authentication Service
+Implements the following endpoints
 
-1. /auth/send-otp
+/auth/send-otp
 
-2. /auth/verify-otp
+/auth/verify-otp
 
-3. /auth/refresh-token
+/auth/validate/token
+
+/auth/refresh-token
+
+/auth/login
+
+/auth/logout
