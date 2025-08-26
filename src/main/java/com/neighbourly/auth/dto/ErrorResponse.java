@@ -1,4 +1,4 @@
-package com.neighbourly.auth.model;
+package com.neighbourly.auth.dto;
 
 import lombok.Builder;
 import lombok.Data;

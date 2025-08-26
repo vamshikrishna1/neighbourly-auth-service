@@ -1,4 +1,4 @@
-package com.neighbourly.auth.model;
+package com.neighbourly.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -21,4 +21,9 @@ public class RedisStore implements CacheStore {
         return redisTemplate.opsForValue().get(key);
     }
 
+    @Override
+    public void delete(String key) {
+        redisTemplate.delete(key);
+    }
+
 }

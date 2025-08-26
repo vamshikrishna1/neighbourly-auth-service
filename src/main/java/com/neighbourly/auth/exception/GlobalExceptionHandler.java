@@ -1,14 +1,13 @@
 package com.neighbourly.auth.exception;
 
-import com.neighbourly.auth.model.ErrorResponse;
+import com.neighbourly.auth.dto.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import com.neighbourly.auth.model.Error;
+import com.neighbourly.auth.dto.Error;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

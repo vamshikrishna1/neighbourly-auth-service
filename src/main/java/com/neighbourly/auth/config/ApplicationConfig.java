@@ -38,13 +38,13 @@ public class ApplicationConfig {
 
 
     @Bean
-    @Profile("dev")
     public CacheStore simpleOtpStore(){
         return new SimpleStore();
     }
 
 
     @Bean
+    @Profile("!dev")
     public CacheStore redisOtpStore(){
         return new RedisStore();
     }
