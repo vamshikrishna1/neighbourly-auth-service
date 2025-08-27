@@ -1,10 +1,11 @@
 package com.neighbourly.auth.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class Response<T> {
     private String uuid;
     private T data;
-    private boolean success;
 }

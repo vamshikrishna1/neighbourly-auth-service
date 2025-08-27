@@ -1,8 +1,9 @@
 package com.neighbourly.auth.exception;
 
-import com.neighbourly.auth.dto.ErrorResponse;
+import com.neighbourly.auth.dto.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.neighbourly.auth.dto.Error;
@@ -14,18 +15,25 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex){
+    public ResponseEntity<Response<List<Error>>> handleValidationException(MethodArgumentNotValidException ex){
 
         List<Error> errors = ex.getBindingResult().getFieldErrors().stream().map(fieldError -> new Error(fieldError.getField(), fieldError.getDefaultMessage())).toList();
-        ErrorResponse errorResponse = ErrorResponse.builder().errList(errors).build();
+        Response<List<Error>> errorResponse = Response.<List<Error>>builder().data(errors).build();
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException exception){
+    public ResponseEntity<Response<List<Error>>> handleBadRequestException(BadRequestException exception){
         Error error = new Error(exception.getErrorCode(), exception.getErrorDescription());
-        ErrorResponse errorResponse = ErrorResponse.builder().errList(List.of(error)).build();
+        Response<List<Error>> errorResponse = Response.<List<Error>>builder().data(List.of(error)).build();
         return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ResponseEntity<Response<List<Error>>> handleMissingRequestHeaderException(MissingRequestHeaderException e) {
+        Error error = new Error("400", "Missing required header: " + e.getHeaderName());
+        Response<List<Error>> response = Response.<List<Error>>builder().data(List.of(error)).build();
+        return ResponseEntity.badRequest().body(response);
     }
 
 

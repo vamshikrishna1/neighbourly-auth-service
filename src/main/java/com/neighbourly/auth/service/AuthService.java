@@ -2,8 +2,8 @@ package com.neighbourly.auth.service;
 
 import com.neighbourly.auth.client.RoleClient;
 import com.neighbourly.auth.client.UserClient;
-import com.neighbourly.auth.exception.BadRequestException;
 import com.neighbourly.auth.dto.*;
+import com.neighbourly.auth.exception.BadRequestException;
 import com.neighbourly.auth.store.CacheStore;
 import com.neighbourly.auth.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
@@ -89,8 +89,7 @@ public class AuthService {
                 .map(RoleDto::getRoleName)
                 .toList());
 
-
-
+        return jwt;
 
 
     }
