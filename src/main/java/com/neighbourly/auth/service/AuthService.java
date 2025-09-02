@@ -1,6 +1,5 @@
 package com.neighbourly.auth.service;
 
-import com.neighbourly.auth.client.RoleClient;
 import com.neighbourly.auth.client.UserClient;
 import com.neighbourly.auth.dto.*;
 import com.neighbourly.auth.exception.BadRequestException;
@@ -15,7 +14,6 @@ import java.util.Map;
 
 import static com.neighbourly.auth.constants.AppConstants.OTP_EMAIL_SUBJECT;
 import static com.neighbourly.auth.constants.AppConstants.OTP_EMAIL_TEMPLATE;
-import static com.neighbourly.auth.constants.ROLE.VERIFIED_USER;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 
@@ -27,7 +25,6 @@ public class AuthService {
     private final EmailService emailService;
     private final JsonUtil jsonUtil;
     private final UserClient userClient;
-    private final RoleClient roleClient;
     private final TokenService tokenService;
 
     public void sendOtp(UserDto request) {
@@ -56,15 +53,13 @@ public class AuthService {
 
         String cachedUserString = otpStore.get("otp:user:"+request.email());
         UserDto userDto = jsonUtil.read(cachedUserString, UserDto.class);
+        userDto.setSubscribed(true);
         Response<UserDto> userResponse = userClient.createUser(userDto);
-        Response<List<RoleDto>> roleResponse = roleClient.findByRoleName(VERIFIED_USER.toString());
-        roleResponse.getData().stream().findFirst().ifPresent(roleDto -> {
-            userClient.assignRoleToUser(userResponse.getData().getUserId(), roleDto.getId());
-        });
+        UserDto createdUser = userResponse.getData();
 
         otpStore.delete("otp:code:" + request.email());
         otpStore.delete("otp:user:" + request.email());
-        String jwt = tokenService.generateToken(userResponse.getData().getUserId(), List.of(VERIFIED_USER.toString()));
+        String jwt = tokenService.generateToken(createdUser.getId(), createdUser.getRoles());
         return Map.of(
                 "accessToken", jwt
         );
@@ -84,13 +79,7 @@ public class AuthService {
             throw new BadRequestException("INVALID-CREDENTIALS", "Invalid credentials", uuid);
         }
 
-        String jwt = tokenService.generateToken(userDto.getUserId(), userDtoResponse.getData().stream()
-                .flatMap(user -> user.getRoles().stream())
-                .map(RoleDto::getRoleName)
-                .toList());
-
-        return jwt;
-
+        return tokenService.generateToken(userDto.getId(), userDto.getRoles());
 
     }
 }

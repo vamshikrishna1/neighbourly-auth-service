@@ -13,6 +13,7 @@ import java.security.Key;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class TokenService {
     private long expiration;
 
 
-    public String generateToken(Long userId, List<String> roles){
+    public String generateToken(Long userId, Set<String> roles){
         return Jwts.builder()
                 .setSubject(String.valueOf(userId))
                 .claim("scope", getRoles(roles))
@@ -42,7 +43,7 @@ public class TokenService {
 
     }
 
-    private String getRoles(List<String> roles){
+    private String getRoles(Set<String> roles){
         return String.join(" ", roles);
     }
 
